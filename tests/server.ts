@@ -21,19 +21,19 @@ describe('test server', () => {
   it('test', async (done) => {
     let res;
     res = await get('');
-    expect(res).toEqual({ error: '404' });
+    expect(res).toEqual({ error: 'unknown operate' });
 
     res = await post('/app/example_1/hello-world');
     expect(res.msg).toEqual('hah');
 
     res = await get('/app/example_1/hello-world');
-    expect(res).toEqual({ error: '404' });
+    expect(res).toEqual({ error: 'unsupported http method for this api' });
 
     res = await get('/app/example_1/some/111');
-    expect(res).toEqual({ error: '404' });
+    expect(res).toEqual({ error: 'unsupported http method for this api' });
 
     res = await get('/app/example_1/someSome');
-    expect(res).toEqual({ error: '404' });
+    expect(res).toEqual({ error: 'api not found' });
     done();
   });
 

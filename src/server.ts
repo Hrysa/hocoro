@@ -48,7 +48,7 @@ router.all('/app/*', async (ctx) => {
     return write(ctx, config[method].res, logO);
   }
 
-  write(ctx, { error: 'http method not found' }, logO);
+  write(ctx, { error: 'unsupported http method for this api' }, logO);
 });
 
 router.get('/log/:scope', (ctx) => {
