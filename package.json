@@ -1,6 +1,6 @@
 {
   "name": "hocoro",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "bin": {
     "hocoro": "dist/src/index.js"
   },
