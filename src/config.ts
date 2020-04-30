@@ -52,7 +52,7 @@ export function getConfig(scope: string, path: string[]) {
 
 function watchingPath(path: string) {
   fileWatcher = chokidar
-    .watch(path, { ignoreInitial: true })
+    .watch(path, { ignoreInitial: true, depth: 1 })
     .on('change', setConfig)
     .on('add', setConfig)
     .on('unlink', removeConfig);
