@@ -42,11 +42,12 @@
     "build": "rm -rf dist && tsc",
     "pub": "yarn build && yarn publish",
     "start": "ts-node src",
-    "watch": "yarn nodemon --watch src -e ts,js,json --exec \"yarn start\""
+    "watch": "yarn nodemon --watch src -e ts,js,json --exec \"yarn start\"",
+    "lint": "yarn prettier --parser typescript --write src/*.ts"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn test"
+      "pre-commit": "yarn test && yarn lint"
     }
   }
 }
