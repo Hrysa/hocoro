@@ -23,6 +23,7 @@
     "nodemon": "^2.0.3",
     "prettier": "^2.0.5",
     "ts-jest": "^25.4.0",
+    "lint-staged": "^10.2.0",
     "ts-node": "^8.9.1",
     "typescript": "^3.8.3"
   },
@@ -43,7 +44,16 @@
     "pub": "yarn build && yarn publish",
     "start": "ts-node src",
     "watch": "yarn nodemon --watch src -e ts,js,json --exec \"yarn start\"",
-    "lint": "yarn prettier --parser typescript --write src/*.ts"
+    "lint": "lint-staged"
+  },
+  "lint-staged": {
+    "*.ts": [
+      "eslint",
+      "yarn prettier --parser typescript --write src/*.ts"
+    ],
+    "*.json": [
+      "yarn prettier"
+    ]
   },
   "husky": {
     "hooks": {
