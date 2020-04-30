@@ -1,0 +1,16 @@
+hello-world:
+  debug: true
+  post:
+    params:
+      a: string?
+      b: string?
+    body:
+    res:
+      code: 100
+      msg: hah
+
+items/:id:
+  post:
+    res:
+      code: 100
+      id: $id

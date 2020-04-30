@@ -1,0 +1,13 @@
+/hello-world:
+  post:
+    params:
+      a: string?
+      b: string?
+    body:
+    res:
+      code: number|10 . string|10 ...
+      msg: hah
+      length: 10
+
+/some/:id:
+  post:

@@ -1,0 +1,43 @@
+{
+  "name": "hocoro",
+  "version": "0.0.1",
+  "bin": "dist/src/index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "@koa/router": "^8.0.8",
+    "@types/jest": "^25.2.1",
+    "@types/koa": "^2.11.3",
+    "@types/koa-router": "^7.4.0",
+    "@types/koa__router": "^8.0.2",
+    "@types/node": "^13.13.4",
+    "@types/node-fetch": "^2.5.7",
+    "@types/yaml": "^1.9.7",
+    "@types/yargs": "^15.0.4",
+    "@typescript-eslint/eslint-plugin": "^2.29.0",
+    "@typescript-eslint/parser": "^2.29.0",
+    "eslint": "^6.8.0",
+    "jest": "^25.4.0",
+    "node-fetch": "^2.6.0",
+    "nodemon": "^2.0.3",
+    "ts-jest": "^25.4.0",
+    "ts-node": "^8.9.1",
+    "typescript": "^3.8.3"
+  },
+  "dependencies": {
+    "@types/koa-bodyparser": "^4.3.0",
+    "chalk": "^4.0.0",
+    "chokidar": "^3.4.0",
+    "koa": "^2.11.0",
+    "koa-bodyparser": "^4.3.0",
+    "koa-router": "^8.0.8",
+    "yargs": "^15.3.1",
+    "yml": "^1.0.0"
+  },
+  "scripts": {
+    "test": "jest --coverage",
+    "build": "rm -rf dist && tsc",
+    "pub": "yarn build && yarn publish",
+    "start": "ts-node src",
+    "watch": "yarn nodemon --watch src -e ts,js,json --exec \"yarn start\""
+  }
+}
