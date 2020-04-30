@@ -1,5 +1,5 @@
 import Koa from 'koa';
-import { getConfig } from './config';
+import { getConfig, hasScope } from './config';
 import Router from '@koa/router';
 import { log } from './util';
 import { stringifyYML } from './util';
@@ -35,21 +35,20 @@ router.all('/app/*', async (ctx) => {
     } = ctx,
     method = ctx.method.toLocaleLowerCase();
 
-  const [, , scope, ...pathList] = path.split('/');
+  const [, , scope, ...pathList] = path.split('/'),
+    logO = { method, path, query, body, rawBody, headers, scope };
+
+  if (!hasScope(scope)) return write(ctx, { error: 'scope not found' }, logO);
+
   const config = getConfig(scope, pathList);
 
-  if (!config) return write(ctx, { error: '404' });
-
-  if (!logs[scope]) logs[scope] = '';
-
-  const info = stringifyYML({ method, path, query, body, rawBody, headers });
-  logs[scope] = log(`Income\n${info}\n`, 'INFO') + logs[scope];
+  if (!config) return write(ctx, { error: 'api not found' }, logO);
 
   if (config[method]) {
-    return write(ctx, config[method].res);
+    return write(ctx, config[method].res, logO);
   }
 
-  write(ctx, { error: '404' });
+  write(ctx, { error: 'http method not found' }, logO);
 });
 
 router.get('/log/:scope', (ctx) => {
@@ -57,9 +56,14 @@ router.get('/log/:scope', (ctx) => {
 });
 
 router.all('*', (ctx) => {
-  ctx.body = { error: '404' };
+  ctx.body = { error: 'unknown operate' };
 });
 
-function write(ctx: any, s: any) {
+function write(ctx: any, s: any, logO?: any) {
   ctx.body = s;
+  logO.res = s;
+  const { scope } = logO;
+  if (!logs[scope]) logs[scope] = '';
+  logO = stringifyYML(logO);
+  if (logO) logs[scope] = log(`Income\n${logO}\n`, 'INFO') + logs[scope];
 }

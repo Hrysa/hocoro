@@ -76,3 +76,7 @@ function setConfig(path: string) {
 function removeConfig(path: string) {
   delete config[path];
 }
+
+export function hasScope(scope: string) {
+  return !!config[scope];
+}

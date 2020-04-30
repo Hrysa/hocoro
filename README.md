@@ -30,7 +30,7 @@ hocoro -p 8080 CONFIG_FILE_DIR
 
 you can see the request information in terminal or visit url using `http://HOSTNAME:PORT/log/SCOPE`
 
-> scope is your config file name (with out yml suffix).
+> scope is your config file name (without yml suffix).
 
 ## config
 
