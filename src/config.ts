@@ -28,6 +28,7 @@ export function setup(path: string) {
 export function getConfig(scope: string, path: string[]) {
   const sc = config[scope];
   if (!sc) return null;
+  if (!path.length) return null;
 
   const matched = Object.keys(sc)
     .map((v) => v.split('/'))
