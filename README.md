@@ -32,6 +32,6 @@ you can see the request information in terminal or visit url using `http://HOSTN
 
 > scope is your config file name (without yml suffix).
 
-## config
+## Configuration
 
 see [examples](./examples/)
