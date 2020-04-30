@@ -17,6 +17,7 @@
     "@typescript-eslint/eslint-plugin": "^2.29.0",
     "@typescript-eslint/parser": "^2.29.0",
     "eslint": "^6.8.0",
+    "husky": "^4.2.5",
     "jest": "^25.4.0",
     "node-fetch": "^2.6.0",
     "nodemon": "^2.0.3",
@@ -41,5 +42,10 @@
     "pub": "yarn build && yarn publish",
     "start": "ts-node src",
     "watch": "yarn nodemon --watch src -e ts,js,json --exec \"yarn start\""
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn test"
+    }
   }
 }
