@@ -1,7 +1,9 @@
 {
   "name": "hocoro",
-  "version": "0.0.1",
-  "bin": "dist/src/index.js",
+  "version": "0.0.2",
+  "bin": {
+    "hocoro": "dist/src/index.js"
+  },
   "license": "MIT",
   "devDependencies": {
     "@koa/router": "^8.0.8",
