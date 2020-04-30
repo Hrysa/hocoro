@@ -1,6 +1,6 @@
 # hocoro
 
-[![npm version](https://badgen.net/npm/v/hocoro)](https://www.npmjs.com/package/hocoro) [![codecov](https://codecov.io/gh/Hrysa/hocoro/branch/master/graph/badge.svg)](https://codecov.io/gh/Hrysa/hocoro)[![Build Status](https://travis-ci.com/Hrysa/hocoro.svg?branch=master)](https://travis-ci.com/Hrysa/hocoro)
+[![npm version](https://badgen.net/npm/v/hocoro)](https://www.npmjs.com/package/hocoro) [![codecov](https://codecov.io/gh/Hrysa/hocoro/branch/master/graph/badge.svg)](https://codecov.io/gh/Hrysa/hocoro) [![Build Status](https://travis-ci.com/Hrysa/hocoro.svg?branch=master)](https://travis-ci.com/Hrysa/hocoro)
 
 simple data-mock server written with nodejs
 
