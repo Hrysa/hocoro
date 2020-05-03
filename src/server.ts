@@ -4,6 +4,7 @@ import Router from '@koa/router';
 import { log } from './util';
 import { stringifyYML } from './util';
 import bodyParser from 'koa-bodyparser';
+import miua from 'miua';
 
 export function createServer({ port }: { port: number }) {
   const app = new Koa();
@@ -12,10 +13,11 @@ export function createServer({ port }: { port: number }) {
     try {
       await bodyParser()(ctx, next);
     } catch (e) {
-      log('json format failed', 'WARN');
-      await next();
+      log('json format failed: ' + e, 'WARN');
     }
   });
+
+  // app.use(bodyParser());
   app.use(router.routes());
 
   const server = app.listen(port);
@@ -27,12 +29,8 @@ const router = new Router();
 const logs: any = {};
 
 router.all('/app/*', async (ctx) => {
-  const {
-      headers,
-      path,
-      query,
-      request: { body, rawBody },
-    } = ctx,
+  const { headers, path, query, request } = ctx,
+    { body, rawBody } = request,
     method = ctx.method.toLocaleLowerCase();
 
   const [, , scope, ...pathList] = path.split('/'),
@@ -40,15 +38,21 @@ router.all('/app/*', async (ctx) => {
 
   if (!hasScope(scope)) return write(ctx, { error: 'scope not found' }, logO);
 
-  const config = getConfig(scope, pathList);
+  const { config, variables } = getConfig(scope, pathList);
 
   if (!config) return write(ctx, { error: 'api not found' }, logO);
 
-  if (config[method]) {
-    return write(ctx, config[method].res, logO);
-  }
+  const api = config[method] || config.all;
 
-  write(ctx, { error: 'unsupported http method for this api' }, logO);
+  if (!api)
+    return write(ctx, { error: 'unsupported http method for this api' }, logO);
+
+  if (!api.res) return write(ctx, null);
+
+  const len = Number(api.len) || '';
+  const { res } = miua.gen({ ['res|' + len]: api.res }, { variables });
+
+  return write(ctx, len ? res : res.pop(), logO);
 });
 
 router.get('/log/:scope', (ctx) => {
@@ -59,7 +63,7 @@ router.all('*', (ctx) => {
   ctx.body = { error: 'unknown operate' };
 });
 
-function write(ctx: any, s: any, logO?: any) {
+function write(ctx: any, s: any, logO: any = {}) {
   ctx.body = s;
   logO.res = s;
   const { scope } = logO;

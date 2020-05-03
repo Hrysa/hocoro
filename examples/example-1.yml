@@ -10,7 +10,11 @@ hello-world:
       msg: hah
 
 items/:id:
-  post:
+  all:
     res:
-      code: 100
+      no: serial
+      code: number|100
+      name: string|10
+      uuid: string|8|toUpperCase - string|4|toUpperCase - string|4|toUpperCase - string|4|toUpperCase - string|12|toUpperCase
       id: $id
+    len: 10

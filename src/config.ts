@@ -27,8 +27,9 @@ export function setup(path: string) {
 
 export function getConfig(scope: string, path: string[]) {
   const sc = config[scope];
-  if (!sc) return null;
-  if (!path.length) return null;
+  const nullObject = { config: null, variables: {} };
+  if (!sc) return nullObject;
+  if (!path.length) return nullObject;
 
   const matched = Object.keys(sc)
     .map((v) => v.split('/'))
@@ -45,10 +46,10 @@ export function getConfig(scope: string, path: string[]) {
         variables[p.slice(1)] = path[i];
       }
     });
-    const res = { ...sc[matched.join('/')], variables };
+    const res = { config: sc[matched.join('/')], variables };
     return res;
   }
-  return null;
+  return nullObject;
 }
 
 function watchingPath(path: string) {
@@ -57,6 +58,7 @@ function watchingPath(path: string) {
     .on('change', setConfig)
     .on('add', setConfig)
     .on('unlink', removeConfig);
+  log('watching directory:' + path, 'INFO');
 }
 
 export function stopWatchingPath() {
